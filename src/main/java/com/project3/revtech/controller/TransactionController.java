@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import javax.validation.Valid;
 
+import com.project3.revtech.service.CartItemService;
+import com.project3.revtech.service.CartServiceImpl;
+import com.project3.revtech.service.PurchasedItemServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,12 @@ public class TransactionController {
 
 	@Autowired
 	TransactionService transactionService;
+
+	@Autowired
+	PurchasedItemServiceImpl purchasedItemService;
+
+	@Autowired
+	CartItemService cartItemService;
 
 	
 	@GetMapping()
@@ -38,7 +47,7 @@ public class TransactionController {
 	
 	@PostMapping("post")
 	public TransactionPojo createTransaction(@Valid @RequestBody TransactionPojo transactionPojo) {
-
+//		cartItemService
 		return transactionService.createTransaction(transactionPojo);
 	}
 	
