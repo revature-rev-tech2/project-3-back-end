@@ -7,6 +7,7 @@ import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,10 @@ public class UserResetPasswordServiceImpl implements UserResetPasswordService {
 	// The password encoder that is used in the UserServiceImpl
 	@Autowired
 	PasswordEncoder encoder;
+
+	
+	
+	
 	@Autowired
 	JavaMailSender mailSender;
 	@Override
@@ -89,6 +94,7 @@ public class UserResetPasswordServiceImpl implements UserResetPasswordService {
 	@Override
 	public void sendEmail(String recipientEmail, String link) throws UnsupportedEncodingException, MessagingException {
 		// TODO Auto-generated method stub
+		
 		
 		  MimeMessage message = mailSender.createMimeMessage();              
 		    MimeMessageHelper helper = new MimeMessageHelper(message);
