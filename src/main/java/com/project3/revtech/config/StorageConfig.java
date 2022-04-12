@@ -22,10 +22,21 @@ public class StorageConfig {
 	@Value("${cloud.aws.region.static}")
 	private String region;
 	
+	@Value("${cloud.aws.credentials.bucket-url}")
+	private String bucketUrl;
+	
 	@Bean
 	public AmazonS3 s3client() {
 		AWSCredentials credentials= new BasicAWSCredentials(accessKey, secretKey);
 		return AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(region).build();
+	}
+
+	public String getBucketUrl() {
+		return bucketUrl;
+	}
+
+	public void setBucketUrl(String bucketUrl) {
+		this.bucketUrl = bucketUrl;
 	}
 	
 }

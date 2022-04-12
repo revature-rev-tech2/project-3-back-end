@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -44,6 +46,10 @@ public class BundleServiceImplTest {
 	
 	@Autowired
 	BundleServiceImpl bundleServiceImpl;
+	
+	@MockBean
+	EmailDiscountServiceImpl emailDiscountService;
+
 
 	@Test
 	public void testGetAllBundles() throws ApplicationException {
@@ -93,12 +99,7 @@ public class BundleServiceImplTest {
     
     @Test
     public void createBundle() throws ApplicationException{
-    	BundleEntity bundleEntity = new BundleEntity();
-    	bundleEntity.setBundleId(1);
-    	bundleEntity.setBundleName("first");
-    	bundleEntity.setBundlePercentage(null);
-    	bundleEntity.setProductOneEntity(new ProductEntity());
-    	bundleEntity.setProductTwoEntity(new ProductEntity());
+    
         
         ProductEntity productTest1 = new ProductEntity();
         productTest1.setImageUrl("sdfa");
@@ -122,20 +123,46 @@ public class BundleServiceImplTest {
         productTest2.setProductSku("134784");
         productTest2.setProductId(2);
         
-     	BundleEntity bundleEntity1 = new BundleEntity();
-     	bundleEntity1.setBundleId(1);
-     	bundleEntity1.setBundleName("first");
-     	bundleEntity1.setBundlePercentage(BigDecimal.valueOf(30L));
-     	bundleEntity1.setProductOneEntity(productTest1);
-     	bundleEntity1.setProductTwoEntity(productTest2);
+    	BundleEntity bundleEntity = new BundleEntity();
+    	bundleEntity.setBundleId(1);
+    	bundleEntity.setBundleName("first");
+    	bundleEntity.setBundlePercentage(null);
+    	bundleEntity.setProductOneEntity(productTest1);
+    	bundleEntity.setProductTwoEntity(productTest2);
+     	
+     	ProductPojo productPojo2 = new ProductPojo();
+     	productPojo2.setImageUrl("sdfa");
+     	productPojo2.setProductCategory("these");
+     	productPojo2.setProductCost(BigDecimal.valueOf(30L));
+     	productPojo2.setProductDescription("not");
+     	productPojo2.setProductName("done");
+     	productPojo2.setProductQty(1);
+     	productPojo2.setProductRemoved(false);
+     	productPojo2.setProductSku("134784");
+     	productPojo2.setProductId(2);
+
+        ProductPojo productPojo = new ProductPojo();
+        productPojo.setImageUrl("sdfa");
+        productPojo.setProductCategory("these");
+        productPojo.setProductCost(BigDecimal.valueOf(30L));
+        productPojo.setProductDescription("not");
+        productPojo.setProductName("done");
+        productPojo.setProductQty(1);
+        productPojo.setProductRemoved(false);
+        productPojo.setProductSku("134784");
+        productPojo.setProductId(1);
+
+        BundlePojo bundlePojo = new BundlePojo();
+     	bundlePojo.setBundleId(1);
+     	bundlePojo.setBundleName("first");
+     	bundlePojo.setBundlePercentage(BigDecimal.valueOf(30L));
+     	bundlePojo.setProductOnePojo(productPojo);
+     	bundlePojo.setProductTwoPojo(productPojo2);
  
 
-        when(this.productRepository.findByProductId(1)).thenReturn(productTest1);
-        when(this.productRepository.findByProductId(2)).thenReturn(productTest2);
-        when(this.bundleRepository.saveAndFlush((BundleEntity) any())).thenReturn(bundleEntity1);
-        BundlePojo bundlePojo = new BundlePojo(3, "DEV3", BigDecimal.valueOf(42L), null, null);
-   
-        
+        when(this.productRepository.findByProductId(anyInt())).thenReturn(productTest1);
+
+ 
         BundlePojo actualResult = this.bundleServiceImpl.createBundle(bundlePojo);
         assertNotNull(actualResult);
         assertSame(bundlePojo, actualResult);

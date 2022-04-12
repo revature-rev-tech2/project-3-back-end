@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project3.revtech.config.StorageConfig;
 import com.project3.revtech.entity.UserEntity;
 import com.project3.revtech.exception.ResetPasswordException;
 import com.project3.revtech.pojo.ResetPasswordPojo;
@@ -29,6 +30,9 @@ import net.bytebuddy.utility.RandomString;
 public class ResetPasswordController {
 	@Autowired
 	UserResetPasswordService resetPasswordService;
+	
+	@Autowired
+	StorageConfig storageConfig;
 
 	// GetMapping For forget_password
 	
@@ -44,7 +48,7 @@ public class ResetPasswordController {
 			resetPasswordService.updateResetPasswordToken(token, resetObject.getEmail());
 			// When a user click on the link should set a page that will call the link (2)
 			// Update the link with collegues path
-			String link = "http://localhost:4200/reset-password?token=" + token;
+			String link = storageConfig.getBucketUrl() + "reset-password?token=" + token;
 			// Set resetObject.getEmail() instead of "RevEmail123456@gmail.com"
 			resetPasswordService.sendEmail(resetObject.getEmail(), link);
 

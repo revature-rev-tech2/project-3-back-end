@@ -3,6 +3,7 @@ cloud:
     credentials:
       access-key: AKIARVOIOJEMLKPYGHGY
       secret-key: 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 
+      bucket-url: http://revtech2-frontend-beta.s3-website-us-east-1.amazonaws.com/
 
     region:
       static: us-east-2

@@ -10,10 +10,8 @@ import com.project3.revtech.dao.ProductRepository;
 import com.project3.revtech.exception.ApplicationException;
 import com.project3.revtech.joinedpojo.CartAndItemsPojo;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
@@ -34,7 +32,6 @@ import static org.mockito.Mockito.when;
                                     ProductServiceImpl.class,
                                     CartServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-@RunWith(SpringRunner.class)
 public class CartItemProductServiceTest {
 	
     @MockBean
@@ -61,10 +58,10 @@ public class CartItemProductServiceTest {
     @Autowired
     CartService cartService;
 
-    @Before
-    public void beforeClass() {
-    	
-    }
+//    @Before
+//    public void beforeClass() {
+//    	
+//    }
 
     @Test
     public void testGetCartItemProductServiceByUser() throws ApplicationException {
